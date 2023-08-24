@@ -13,3 +13,15 @@ func NewStudentUsecase(studentRepository domain.StudentRepository) domain.Studen
 func (su StudentUsecase) GetStudents() ([]domain.Student, error) {
 	return su.StudentRepository.GetStudents()
 }
+
+func (su StudentUsecase) PostStudent(student domain.Student) error {
+	return su.StudentRepository.PostStudent(student)
+}
+
+func (su StudentUsecase) UpdateStudent(id int, student domain.Student) error {
+	return su.StudentRepository.UpdateStudent(id, student)
+}
+
+func (su StudentUsecase) DeleteStudent(id int) error {
+	return su.StudentRepository.DeleteStudent(id)
+}

@@ -12,8 +12,14 @@ type Student struct {
 
 type StudentRepository interface {
 	GetStudents() ([]Student, error)
+	PostStudent(student Student) error
+	UpdateStudent(id int, student Student) error
+	DeleteStudent(id int) error
 }
 
 type StudentUsecase interface {
 	GetStudents() ([]Student, error)
+	PostStudent(student Student) error
+	UpdateStudent(id int, student Student) error
+	DeleteStudent(id int) error
 }
