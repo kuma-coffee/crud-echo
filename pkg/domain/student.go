@@ -12,6 +12,7 @@ type Student struct {
 
 type StudentRepository interface {
 	GetStudents() ([]Student, error)
+	GetStudent(id int) (Student, error)
 	PostStudent(student Student) error
 	UpdateStudent(id int, student Student) error
 	DeleteStudent(id int) error
@@ -19,6 +20,7 @@ type StudentRepository interface {
 
 type StudentUsecase interface {
 	GetStudents() ([]Student, error)
+	GetStudent(id int) (Student, error)
 	PostStudent(student Student) error
 	UpdateStudent(id int, student Student) error
 	DeleteStudent(id int) error

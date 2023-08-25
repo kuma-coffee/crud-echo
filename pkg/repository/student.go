@@ -34,6 +34,16 @@ func (sr StudentRepository) GetStudents() ([]domain.Student, error) {
 	return students, err
 }
 
+func (sr StudentRepository) GetStudent(id int) (domain.Student, error) {
+	student := domain.Student{}
+
+	sql := `SELECT * FROM students WHERE id = $1`
+
+	err := sr.db.QueryRow(sql, id).Scan(&student.Id, &student.Fullname, &student.Address, &student.Birthdate, &student.Class, &student.Batch, &student.SchoolName)
+
+	return student, err
+}
+
 func (sr StudentRepository) PostStudent(student domain.Student) error {
 	sql := `INSERT INTO students (fullname, address, birthdate, class, batch, school_name) VALUES($1, $2, $3, $4, $5, $6)`
 

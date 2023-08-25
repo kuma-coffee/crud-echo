@@ -14,6 +14,10 @@ func (su StudentUsecase) GetStudents() ([]domain.Student, error) {
 	return su.StudentRepository.GetStudents()
 }
 
+func (su StudentUsecase) GetStudent(id int) (domain.Student, error) {
+	return su.StudentRepository.GetStudent(id)
+}
+
 func (su StudentUsecase) PostStudent(student domain.Student) error {
 	return su.StudentRepository.PostStudent(student)
 }

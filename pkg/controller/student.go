@@ -22,6 +22,20 @@ func (sc *StudentController) GetStudents(c echo.Context) error {
 	return response.SetResponse(c, http.StatusOK, "success", resp)
 }
 
+func (sc *StudentController) GetStudent(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return response.SetResponse(c, http.StatusInternalServerError, err.Error(), nil)
+	}
+
+	resp, err := sc.StudentUsecase.GetStudent(id)
+	if err != nil {
+		return response.SetResponse(c, http.StatusInternalServerError, err.Error(), nil)
+	}
+
+	return response.SetResponse(c, http.StatusOK, "success", resp)
+}
+
 func (sc *StudentController) PostStudent(c echo.Context) error {
 	var newStudent domain.Student
 
