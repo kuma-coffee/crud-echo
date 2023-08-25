@@ -1,6 +1,10 @@
 package usecase
 
-import "github.com/kuma-coffee/crud-echo/pkg/domain"
+import (
+	"github.com/kuma-coffee/crud-echo/pkg/domain"
+	"github.com/kuma-coffee/crud-echo/pkg/dto"
+	"github.com/mitchellh/mapstructure"
+)
 
 type StudentUsecase struct {
 	StudentRepository domain.StudentRepository
@@ -18,11 +22,15 @@ func (su StudentUsecase) GetStudent(id int) (domain.Student, error) {
 	return su.StudentRepository.GetStudent(id)
 }
 
-func (su StudentUsecase) PostStudent(student domain.Student) error {
+func (su StudentUsecase) PostStudent(studentDTO dto.StudentDTO) error {
+	var student domain.Student
+	mapstructure.Decode(studentDTO, &student)
 	return su.StudentRepository.PostStudent(student)
 }
 
-func (su StudentUsecase) UpdateStudent(id int, student domain.Student) error {
+func (su StudentUsecase) UpdateStudent(id int, studentDTO dto.StudentDTO) error {
+	var student domain.Student
+	mapstructure.Decode(studentDTO, &student)
 	return su.StudentRepository.UpdateStudent(id, student)
 }
 

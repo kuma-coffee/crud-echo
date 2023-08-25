@@ -1,5 +1,7 @@
 package domain
 
+import "github.com/kuma-coffee/crud-echo/pkg/dto"
+
 type Student struct {
 	Id         int    `json:"id"`
 	Fullname   string `json:"fullname"`
@@ -21,7 +23,7 @@ type StudentRepository interface {
 type StudentUsecase interface {
 	GetStudents() ([]Student, error)
 	GetStudent(id int) (Student, error)
-	PostStudent(student Student) error
-	UpdateStudent(id int, student Student) error
+	PostStudent(studentDTO dto.StudentDTO) error
+	UpdateStudent(id int, studentDTO dto.StudentDTO) error
 	DeleteStudent(id int) error
 }

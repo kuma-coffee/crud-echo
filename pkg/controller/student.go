@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/kuma-coffee/crud-echo/pkg/domain"
+	"github.com/kuma-coffee/crud-echo/pkg/dto"
 	"github.com/kuma-coffee/crud-echo/shared/response"
 	"github.com/labstack/echo/v4"
 )
@@ -19,13 +20,13 @@ func (sc *StudentController) GetStudents(c echo.Context) error {
 		return response.SetResponse(c, http.StatusInternalServerError, err.Error(), nil)
 	}
 
-	return response.SetResponse(c, http.StatusOK, "success", resp)
+	return response.SetResponse(c, http.StatusOK, "success get students", resp)
 }
 
 func (sc *StudentController) GetStudent(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		return response.SetResponse(c, http.StatusInternalServerError, err.Error(), nil)
+		return response.SetResponse(c, http.StatusBadRequest, err.Error(), nil)
 	}
 
 	resp, err := sc.StudentUsecase.GetStudent(id)
@@ -33,18 +34,23 @@ func (sc *StudentController) GetStudent(c echo.Context) error {
 		return response.SetResponse(c, http.StatusInternalServerError, err.Error(), nil)
 	}
 
-	return response.SetResponse(c, http.StatusOK, "success", resp)
+	return response.SetResponse(c, http.StatusOK, "success get student", resp)
 }
 
 func (sc *StudentController) PostStudent(c echo.Context) error {
-	var newStudent domain.Student
+	var studentDTO dto.StudentDTO
 
-	err := c.Bind(&newStudent)
+	err := c.Bind(&studentDTO)
 	if err != nil {
-		return response.SetResponse(c, http.StatusInternalServerError, err.Error(), nil)
+		return response.SetResponse(c, http.StatusBadRequest, err.Error(), nil)
 	}
 
-	err = sc.StudentUsecase.PostStudent(newStudent)
+	err = studentDTO.Validation()
+	if err != nil {
+		return response.SetResponse(c, http.StatusBadRequest, err.Error(), nil)
+	}
+
+	err = sc.StudentUsecase.PostStudent(studentDTO)
 	if err != nil {
 		return response.SetResponse(c, http.StatusInternalServerError, err.Error(), nil)
 	}
@@ -53,19 +59,24 @@ func (sc *StudentController) PostStudent(c echo.Context) error {
 }
 
 func (sc *StudentController) UpdateStudent(c echo.Context) error {
-	var newStudent domain.Student
+	var studentDTO dto.StudentDTO
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		return response.SetResponse(c, http.StatusInternalServerError, err.Error(), nil)
+		return response.SetResponse(c, http.StatusBadRequest, err.Error(), nil)
 	}
 
-	err = c.Bind(&newStudent)
+	err = c.Bind(&studentDTO)
 	if err != nil {
-		return response.SetResponse(c, http.StatusInternalServerError, err.Error(), nil)
+		return response.SetResponse(c, http.StatusBadRequest, err.Error(), nil)
 	}
 
-	err = sc.StudentUsecase.UpdateStudent(id, newStudent)
+	err = studentDTO.Validation()
+	if err != nil {
+		return response.SetResponse(c, http.StatusBadRequest, err.Error(), nil)
+	}
+
+	err = sc.StudentUsecase.UpdateStudent(id, studentDTO)
 	if err != nil {
 		return response.SetResponse(c, http.StatusInternalServerError, err.Error(), nil)
 	}
@@ -76,7 +87,7 @@ func (sc *StudentController) UpdateStudent(c echo.Context) error {
 func (sc *StudentController) DeleteStudent(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		return response.SetResponse(c, http.StatusInternalServerError, err.Error(), nil)
+		return response.SetResponse(c, http.StatusBadRequest, err.Error(), nil)
 	}
 
 	err = sc.StudentUsecase.DeleteStudent(id)
