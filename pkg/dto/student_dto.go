@@ -11,7 +11,7 @@ type StudentDTO struct {
 	SchoolName string `json:"school_name"`
 }
 
-func (s StudentDTO) Validation() error {
+func (s StudentDTO) ValidationStudent() error {
 	return validation.ValidateStruct(&s,
 		validation.Field(&s.Fullname, validation.Required),
 		validation.Field(&s.Birthdate, validation.Required),

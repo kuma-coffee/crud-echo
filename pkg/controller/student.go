@@ -45,7 +45,7 @@ func (sc *StudentController) PostStudent(c echo.Context) error {
 		return response.SetResponse(c, http.StatusBadRequest, err.Error(), nil)
 	}
 
-	err = studentDTO.Validation()
+	err = studentDTO.ValidationStudent()
 	if err != nil {
 		return response.SetResponse(c, http.StatusBadRequest, err.Error(), nil)
 	}
@@ -71,7 +71,7 @@ func (sc *StudentController) UpdateStudent(c echo.Context) error {
 		return response.SetResponse(c, http.StatusBadRequest, err.Error(), nil)
 	}
 
-	err = studentDTO.Validation()
+	err = studentDTO.ValidationStudent()
 	if err != nil {
 		return response.SetResponse(c, http.StatusBadRequest, err.Error(), nil)
 	}
