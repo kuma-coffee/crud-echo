@@ -15,9 +15,9 @@ func NewUserRepository(db *sql.DB) domain.UserRepository {
 }
 
 func (ur UserRepository) Register(user domain.User) error {
-	sql := `INSERT INTO users(fullname, email, address, password) VALUES($1, $2, $3, $4)`
+	sql := `INSERT INTO users(username, email, address, password) VALUES($1, $2, $3, $4)`
 
-	_, err := ur.db.Exec(sql, user.Fullname, user.Email, user.Address, user.Password)
+	_, err := ur.db.Exec(sql, user.Username, user.Email, user.Address, user.Password)
 
 	return err
 }
@@ -27,6 +27,6 @@ func (ur UserRepository) GetUserEmail(email string) (domain.User, error) {
 
 	sql := `SELECT * FROM users WHERE email = $1`
 
-	err := ur.db.QueryRow(sql, email).Scan(&user.Id, &user.Fullname, &user.Email, &user.Address, &user.Password)
+	err := ur.db.QueryRow(sql, email).Scan(&user.Id, &user.Username, &user.Email, &user.Address, &user.Password)
 	return user, err
 }
