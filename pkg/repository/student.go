@@ -17,7 +17,7 @@ func NewStudentRepository(db *sql.DB) domain.StudentRepository {
 func (sr StudentRepository) GetStudents() ([]domain.Student, error) {
 	students := []domain.Student{}
 
-	sql := `SELECT * FROM students`
+	sql := `SELECT * FROM students ORDER BY id ASC`
 
 	rows, err := sr.db.Query(sql)
 	for rows.Next() {
@@ -34,7 +34,7 @@ func (sr StudentRepository) GetStudents() ([]domain.Student, error) {
 	return students, err
 }
 
-func (sr StudentRepository) GetStudent(id int) (domain.Student, error) {
+func (sr StudentRepository) GetStudentById(id int) (domain.Student, error) {
 	student := domain.Student{}
 
 	sql := `SELECT * FROM students WHERE id = $1`

@@ -23,13 +23,13 @@ func (sc *StudentController) GetStudents(c echo.Context) error {
 	return response.SetResponse(c, http.StatusOK, "success get students", resp)
 }
 
-func (sc *StudentController) GetStudent(c echo.Context) error {
+func (sc *StudentController) GetStudentById(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return response.SetResponse(c, http.StatusBadRequest, err.Error(), nil)
 	}
 
-	resp, err := sc.StudentUsecase.GetStudent(id)
+	resp, err := sc.StudentUsecase.GetStudentById(id)
 	if err != nil {
 		return response.SetResponse(c, http.StatusInternalServerError, err.Error(), nil)
 	}
@@ -71,6 +71,11 @@ func (sc *StudentController) UpdateStudent(c echo.Context) error {
 		return response.SetResponse(c, http.StatusBadRequest, err.Error(), nil)
 	}
 
+	_, err = sc.StudentUsecase.GetStudentById(id)
+	if err != nil {
+		return response.SetResponse(c, http.StatusNotFound, "student id not found", nil)
+	}
+
 	err = studentDTO.ValidationStudent()
 	if err != nil {
 		return response.SetResponse(c, http.StatusBadRequest, err.Error(), nil)
@@ -88,6 +93,11 @@ func (sc *StudentController) DeleteStudent(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return response.SetResponse(c, http.StatusBadRequest, err.Error(), nil)
+	}
+
+	_, err = sc.StudentUsecase.GetStudentById(id)
+	if err != nil {
+		return response.SetResponse(c, http.StatusNotFound, "student id not found", nil)
 	}
 
 	err = sc.StudentUsecase.DeleteStudent(id)
