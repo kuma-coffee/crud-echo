@@ -1,6 +1,8 @@
 package usecase
 
 import (
+	"errors"
+
 	"github.com/kuma-coffee/crud-echo/pkg/domain"
 	"github.com/kuma-coffee/crud-echo/pkg/dto"
 	"github.com/mitchellh/mapstructure"
@@ -19,7 +21,18 @@ func (su StudentUsecase) GetStudents() ([]domain.Student, error) {
 }
 
 func (su StudentUsecase) GetStudent(id int) (domain.Student, error) {
-	return su.StudentRepository.GetStudent(id)
+	students, err := su.GetStudents()
+	if err != nil {
+		return domain.Student{}, err
+	}
+
+	for _, k := range students {
+		if id == k.Id {
+			return su.StudentRepository.GetStudent(id)
+		}
+	}
+
+	return domain.Student{}, errors.New("student id doesn't exist")
 }
 
 func (su StudentUsecase) PostStudent(studentDTO dto.StudentDTO) error {
