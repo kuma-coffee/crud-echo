@@ -18,4 +18,5 @@ func RunServer() {
 func Apply(e *echo.Echo, g *echo.Group) {
 	db := db.NewInstanceDb()
 	router.NewStudentRouter(e, g, db)
+	router.NewUserRouter(e, g, db)
 }
