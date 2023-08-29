@@ -16,9 +16,9 @@ func NewStudentRouter(e *echo.Echo, g *echo.Group, db *sql.DB) {
 		StudentUsecase: su,
 	}
 
-	e.GET("/student", sc.GetStudents)
-	e.GET("/student/:id", sc.GetStudentById)
-	e.POST("/student", sc.PostStudent)
-	e.PUT("/student/:id", sc.UpdateStudent)
-	e.DELETE("/student/:id", sc.DeleteStudent)
+	g.GET("/student", sc.GetStudents)
+	g.GET("/student/:id", sc.GetStudentById)
+	g.POST("/student", sc.PostStudent)
+	g.PUT("/student/:id", sc.UpdateStudent)
+	g.DELETE("/student/:id", sc.DeleteStudent)
 }

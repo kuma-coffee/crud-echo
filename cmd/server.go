@@ -8,7 +8,7 @@ import (
 
 func RunServer() {
 	e := echo.New()
-	g := e.Group("")
+	g := e.Group("/api")
 
 	Apply(e, g)
 

@@ -16,6 +16,6 @@ func NewUserRouter(e *echo.Echo, g *echo.Group, db *sql.DB) {
 		UserUsecase: uu,
 	}
 
-	e.POST("/login", uc.Login)
-	e.POST("/register", uc.Register)
+	g.POST("/login", uc.Login)
+	g.POST("/register", uc.Register)
 }
