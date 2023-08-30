@@ -18,6 +18,7 @@ type StudentRepository interface {
 	PostStudent(student Student) error
 	UpdateStudent(id int, student Student) error
 	DeleteStudent(id int) error
+	SearchStudent(query []string) ([]Student, error)
 }
 
 type StudentUsecase interface {
@@ -26,4 +27,5 @@ type StudentUsecase interface {
 	PostStudent(studentDTO dto.StudentDTO) error
 	UpdateStudent(id int, studentDTO dto.StudentDTO) error
 	DeleteStudent(id int) error
+	SearchStudent(query []string) ([]Student, error)
 }

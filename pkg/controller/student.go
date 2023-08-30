@@ -3,6 +3,7 @@ package controller
 import (
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/kuma-coffee/crud-echo/pkg/domain"
 	"github.com/kuma-coffee/crud-echo/pkg/dto"
@@ -106,4 +107,16 @@ func (sc *StudentController) DeleteStudent(c echo.Context) error {
 	}
 
 	return response.SetResponse(c, http.StatusOK, "success delete student", nil)
+}
+
+func (sc *StudentController) SearchStudent(c echo.Context) error {
+	query := c.QueryParam("q")
+	querySplit := strings.Fields(query)
+
+	resp, err := sc.StudentUsecase.SearchStudent(querySplit)
+	if err != nil {
+		return response.SetResponse(c, http.StatusInternalServerError, err.Error(), nil)
+	}
+
+	return response.SetResponse(c, http.StatusOK, "success search student", resp)
 }

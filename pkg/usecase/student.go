@@ -37,3 +37,7 @@ func (su StudentUsecase) UpdateStudent(id int, studentDTO dto.StudentDTO) error 
 func (su StudentUsecase) DeleteStudent(id int) error {
 	return su.StudentRepository.DeleteStudent(id)
 }
+
+func (su StudentUsecase) SearchStudent(query []string) ([]domain.Student, error) {
+	return su.StudentRepository.SearchStudent(query)
+}
