@@ -120,3 +120,14 @@ func (sc *StudentController) SearchStudent(c echo.Context) error {
 
 	return response.SetResponse(c, http.StatusOK, "success search student", resp)
 }
+
+func (sc *StudentController) SortStudent(c echo.Context) error {
+	query := c.QueryParam("q")
+
+	resp, err := sc.StudentUsecase.SortStudent(query)
+	if err != nil {
+		return response.SetResponse(c, http.StatusInternalServerError, err.Error(), nil)
+	}
+
+	return response.SetResponse(c, http.StatusOK, "success sort student", resp)
+}

@@ -22,4 +22,5 @@ func NewStudentRouter(e *echo.Echo, g *echo.Group, db *sql.DB) {
 	g.PUT("/student/:id", sc.UpdateStudent)
 	g.DELETE("/student/:id", sc.DeleteStudent)
 	g.GET("/search", sc.SearchStudent)
+	g.GET("/sort", sc.SortStudent)
 }

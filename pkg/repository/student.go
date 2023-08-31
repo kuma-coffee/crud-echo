@@ -2,6 +2,7 @@ package repository
 
 import (
 	"database/sql"
+	"sort"
 
 	"github.com/kuma-coffee/crud-echo/pkg/domain"
 )
@@ -118,4 +119,23 @@ func (sr StudentRepository) SearchStudent(query []string) ([]domain.Student, err
 		result = append(result, student)
 	}
 	return result, nil
+}
+
+func (sr StudentRepository) SortStudent(query string) ([]domain.Student, error) {
+	students, err := sr.GetStudents()
+	if err != nil {
+		return nil, err
+	}
+
+	if query == "fullnameAscending" {
+		sort.SliceStable(students, func(i, j int) bool {
+			return students[i].Fullname < students[j].Fullname
+		})
+	} else if query == "fullnameDescending" {
+		sort.SliceStable(students, func(i, j int) bool {
+			return students[i].Fullname > students[j].Fullname
+		})
+	}
+
+	return students, nil
 }

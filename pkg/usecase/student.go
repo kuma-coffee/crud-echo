@@ -41,3 +41,7 @@ func (su StudentUsecase) DeleteStudent(id int) error {
 func (su StudentUsecase) SearchStudent(query []string) ([]domain.Student, error) {
 	return su.StudentRepository.SearchStudent(query)
 }
+
+func (su StudentUsecase) SortStudent(query string) ([]domain.Student, error) {
+	return su.StudentRepository.SortStudent(query)
+}
