@@ -1,4 +1,4 @@
-CREATE TABLE students (
+CREATE TABLE IF NOT EXISTS students (
     id bigserial PRIMARY KEY,
 	fullname VARCHAR ( 255 ) NOT NULL,
 	address VARCHAR ( 255 ) NOT NULL,
